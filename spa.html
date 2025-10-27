@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Explorer SPA</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #4a90e2;
+      color: white;
+      text-align: center;
+      padding: 1.5em 0;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+    }
+
+    nav {
+      margin-top: 1em;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1em;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 2em;
+      min-height: 60vh;
+      background: white;
+      margin: 2em auto;
+      width: 80%;
+      max-width: 700px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1em;
+      background: #222;
+      color: white;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 0.8em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #357ab8;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>📖 Book Explorer</h1>
+    <nav>
+      <a href="#/" class="nav-link">Home</a>
+      <a href="#/books" class="nav-link">Books</a>
+      <a href="#/contact" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <main id="app">
+    <!-- Dynamic content will load here -->
+  </main>
+
+  <footer>
+    <p>© 2025 Book Explorer | Built with HTML, CSS & JS</p>
+  </footer>
+
+  <script>
+    // Define routes and their content
+    const routes = {
+      '/': `
+        <h2>Welcome to Book Explorer</h2>
+        <p>Discover and explore your favorite books without leaving this page.</p>
+        <p>Use the navigation links above to explore different sections.</p>
+      `,
+
+      '/books': `
+        <h2>Our Book Collection</h2>
+        <ul>
+          <li><strong>The Great Gatsby</strong> – F. Scott Fitzgerald</li>
+          <li><strong>1984</strong> – George Orwell</li>
+          <li><strong>To Kill a Mockingbird</strong> – Harper Lee</li>
+          <li><strong>Harry Potter</strong> – J.K. Rowling</li>
+        </ul>
+      `,
+
+      '/contact': `
+        <h2>Contact Us</h2>
+        <p>We’d love to hear from you!</p>
+        <form id="contactForm">
+          <label>Name:</label><br />
+          <input type="text" id="name" placeholder="Your name" required /><br /><br />
+
+          <label>Message:</label><br />
+          <textarea id="message" placeholder="Your message" required></textarea><br /><br />
+
+          <button type="submit">Send Message</button>
+        </form>
+      `
+    };
+
+    // Router function
+    function router() {
+      const path = location.hash.slice(1) || '/';
+      const app = document.getElementById('app');
+      app.innerHTML = routes[path] || '<h2>404 - Page Not Found</h2>';
+
+      // Add event listener to form if it's the contact page
+      if (path === '/contact') {
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = document.getElementById('name').value;
+          const message = document.getElementById('message').value;
+          alert(`Thanks, ${name}! Your message has been sent.`);
+          form.reset();
+        });
+      }
+    }
+
+    // Listen for navigation changes
+    window.addEventListener('hashchange', router);
+    window.addEventListener('load', router);
+  </script>
+</body>
+</html>
